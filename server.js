@@ -1,9 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 
 const app = express();
 const port = 3000;
+
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
+
+//session middleware
+app.use(sessions({
+    secret: "simplekey010101",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+// cookie parser middleware
+app.use(cookieParser());
 
 
 app.set('view engine', 'ejs');

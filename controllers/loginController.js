@@ -1,11 +1,17 @@
-const { validationResult  } = require('express-validator')
+const { validationResult } = require('express-validator')
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const sessions = require('express-session');
 
+let sess;
 const loginView = (req, res) => {
+    sess = req.session;
+    if (sess.username) {
+        return res.redirect('/dashboard');
+    }
 
     res.render("login", {
-    } );
+    });
 }
 
 // const loginValidator = () => {
@@ -15,12 +21,12 @@ const loginView = (req, res) => {
 //     ]
 //   }
 
-  const userLogin = async (req, res) => {
+const userLogin = async (req, res) => {
     let status = false;
     let message = "";
     let code = 200;
     const err = validationResult(req);
-    const { username, password} = req.body;
+    const { username, password } = req.body;
     try {
 
         if (!err.isEmpty()) {
@@ -28,8 +34,8 @@ const loginView = (req, res) => {
             throw new Error(message);
         }
 
-        let Data = await User.findOne({Username:username});
-        if(Data == null){
+        let Data = await User.findOne({ Username: username });
+        if (Data == null) {
             throw new Error("User not found.");
         }
 
@@ -37,18 +43,20 @@ const loginView = (req, res) => {
         if (validPassword) {
             status = true;
             message = "Login succeed.";
-        }else{
+            sess = req.session;
+            sess.username = Data.Username;
+        } else {
             message = "Login failed.";
         }
-        
+
     } catch (error) {
         message = error.message;
     }
 
     return res.status(code).json({ status: status, message: message, errors: err.array() });
-  };
+};
 
-module.exports =  {
+module.exports = {
     loginView,
     userLogin
 };

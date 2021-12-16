@@ -1,10 +1,27 @@
 const express = require('express');
 const { loginView, userLogin } = require('../controllers/loginController');
 const { dashView } = require('../controllers/dashboardController');
-const { userView, dataTable, createUser, updateUser, getUser} = require('../controllers/userController');
+const { userView, userDataTable, createUser, updateUser, getUser} = require('../controllers/userController');
+const { employeeView, employeeDataTable, deleteEmployee, getEmployee} = require('../controllers/employeeController');
 const router = express.Router();
 const { check } = require('express-validator')
 const User = require("../models/User");
+
+
+let sess;
+router.get('/',function(req,res){
+    sess=req.session;
+    sess.username;
+    if(sess.username) {
+        return res.redirect('/dashboard');
+    }
+    res.redirect('/login');
+});
+
+router.get('/logout',(req,res) => {
+  req.session.destroy();
+  res.redirect('/login');
+});
 
 
 router.get('/login', loginView);
@@ -24,7 +41,7 @@ router.get('/user', userView);
 
 router.get('/user/:id', getUser);
 
-router.post('/user/datatable', dataTable);
+router.post('/user/datatable', userDataTable);
 
   
 router.post('/user/create', [
@@ -57,6 +74,15 @@ router.post('/user/update', [
 ], updateUser);
 
 
+
+router.get('/employee', employeeView);
+
+router.get('/employee/:id', getEmployee);
+
+router.post('/employee/datatable', employeeDataTable);
+
+
+router.post('/employee/delete', deleteEmployee);
 
 
 module.exports = router;

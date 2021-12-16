@@ -1,0 +1,186 @@
+<%- include('templates/head'); %>
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><%=pageName%></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><%=pageName%></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <button type="button" class="btn btn-app bg-secondary" id="btnRefresh">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Datagrid</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered" id="dataGrid">
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>UNIQ</th>
+                                        <th>Timestamp</th>
+                                        <th>Absen ID</th>
+                                        <th>Nama Karyawan</th>
+                                        <th>Username</th>
+                                        <th>NIK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Employee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               Delete data ?
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnDelete">Submit</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<%- include('templates/foot'); %>
+<script src="/assets/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    let table = $('#dataGrid').DataTable({
+        processing: true,
+        serverSide: true,
+        sScrollXInner: '150%',
+        scrollY: "500px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        order: [
+            [1, "asc"]
+        ],
+        ajax: {
+            dataType: "json",
+            type: "POST",
+            url: "/employee/datatable"
+        },
+        columnDefs: [{
+            orderable: false,
+            targets: 0
+        }],
+        columns: [{
+                "data": "_id",
+                "render": function (data, type, row) {
+                    return "<button type=\"button\" onclick=\"delete_data('" + data + "')\" class=\"btn btn-danger btn-space btn-sm\"><i class=\"fa fa-fw fa-trash\"></i></button>";
+                }
+            },
+            {
+                "data": "UNIQ",
+                "autoWidth": true
+            },
+            {
+                "data": "timestamp",
+                "autoWidth": true
+            },
+            {
+                "data": "absenId",
+                "autoWidth": true
+            },
+            {
+                "data": "NamaKaryawan",
+                "autoWidth": true
+            },
+            {
+                "data": "Username",
+                "autoWidth": true
+            },
+            {
+                "data": "NIK",
+                "autoWidth": true
+            },
+        ]
+    });
+
+
+    $('#btnRefresh').click(function () {
+        table.ajax.reload(null, false);
+    });
+
+    let selectedId = "";
+
+    function delete_data(id) {
+        $.get("/employee/" + id,
+            function (response) {
+                if (response.status) {
+                    let data = response.data;
+                    selectedId = data._id;
+                    $('#deleteModal').modal('show');
+                } else {
+                    toastr.warning(response.message)
+                }
+            });
+    }
+
+
+    $('#btnDelete').click(function () {
+        $.post("/employee/delete", {
+                id : selectedId
+            },
+            function (data) {
+                if (data.status) {
+                    toastr.success(data.message)
+                    $('#deleteModal').modal('hide');
+                    table.ajax.reload();
+                } else {
+                    toastr.warning(data.message)
+                }
+            });
+    });
+    
+</script>

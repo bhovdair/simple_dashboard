@@ -102,7 +102,7 @@ const getUser = async (req, res) => {
 
 };
 
-const dataTable = function (req, res) {
+const userDataTable = function (req, res) {
     User.dataTables({
         limit: req.body.length,
         skip: req.body.start,
@@ -121,6 +121,13 @@ const dataTable = function (req, res) {
 
 const userView = (req, res) => {
 
+    
+    let sess = req.session;
+    sess.username;
+    if (!sess.username) {
+        return res.redirect('/login');
+    }
+
     res.render("user", {
         pageName: "User",
         currentMenu: 'user'
@@ -129,7 +136,7 @@ const userView = (req, res) => {
 
 module.exports = {
     userView,
-    dataTable,
+    userDataTable,
     createUser,
     updateUser,
     getUser

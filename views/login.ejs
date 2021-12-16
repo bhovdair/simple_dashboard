@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/vendor/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/vendor/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/vendor/plugins/toastr/toastr.min.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -28,7 +29,7 @@
                 <p class="login-box-msg">Please login to start your session</p>
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Username">
+                    <input type="text" class="form-control" placeholder="username" id="username" autocomplete="off">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -36,7 +37,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" placeholder="Password" id="password" autocomplete="off">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -46,7 +47,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-12">
-                        <button type="button" class="btn btn-primary btn-block">Login</button>
+                        <button type="button" class="btn btn-primary btn-block" id="btnLogin">Login</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -64,6 +65,35 @@
     <script src="/assets/vendor/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/assets/vendor/dist/js/adminlte.min.js"></script>
+    <script src="/assets/vendor/plugins/toastr/toastr.min.js"></script>
+
+    <script>
+        $('#btnLogin').click(function () {
+            $('.card-body').find('.is-invalid').removeClass('is-invalid');
+            $('.card-body').find('.error').remove();
+            $.post("/login/auth", {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                },
+                function (data) {
+                    if (data.status) {
+                        toastr.success(data.message)
+                        location.reload();
+                    } else {
+                        toastr.warning(data.message)
+                        if (data.errors.length > 0) {
+                            $.each(data.errors, function (key, val) {
+                                let element = $('#' + val.param);
+                                $(element).addClass('is-invalid');
+                                $(element).parent().append('<span class="error invalid-feedback">' +
+                                    val
+                                    .msg + '</span>');
+                            });
+                        }
+                    }
+                });
+        });
+    </script>
 </body>
 
 </html>
