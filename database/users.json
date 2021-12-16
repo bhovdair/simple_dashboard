@@ -1,0 +1,93 @@
+[{
+  "_id": {
+    "$oid": "61ba75f0a43479f2cbf6d380"
+  },
+  "Username": "bhovdair",
+  "FullName": "zzzzz",
+  "Password": "$2a$10$pIk9vCeu6y6q6IG0nQ7b6eLuB5Z/pekFkC3BzeiSLyAKUBjj.BGIm",
+  "IsActive": true,
+  "CreatedBy": "System",
+  "CreatedOn": {
+    "$date": "2021-12-15T23:10:40.733Z"
+  },
+  "__v": 0,
+  "ModifiedOn": {
+    "$date": "2021-12-16T13:56:05.262Z"
+  }
+},{
+  "_id": {
+    "$oid": "61ba75f9a43479f2cbf6d386"
+  },
+  "Username": "bhovdairz",
+  "FullName": "asdsad",
+  "Password": "$2a$10$fXim7l.unqNDV5qtt10iF.MqOuP2ZRSfgk4rKfEZogQz5rBvTgnDi",
+  "IsActive": false,
+  "CreatedBy": "System",
+  "CreatedOn": {
+    "$date": "2021-12-15T23:10:49.724Z"
+  },
+  "__v": 0,
+  "ModifiedOn": {
+    "$date": "2021-12-16T13:55:27.436Z"
+  }
+},{
+  "_id": {
+    "$oid": "61ba7c05d5c72c79c4d2c6c7"
+  },
+  "Username": "bhovdai",
+  "FullName": "Muhammad Bhovdair",
+  "Password": "$2a$10$tm23rR4BieYrxSqRi3t21umr1Jm60Y/ldw234tT0TUcuEDLmPNi4y",
+  "IsActive": true,
+  "CreatedBy": "System",
+  "ModifiedOn": null,
+  "ModifiedBy": null,
+  "CreatedOn": {
+    "$date": "2021-12-15T23:36:37.946Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ba7eae9c39b07cb6af2eef"
+  },
+  "Username": "bhovdair2",
+  "FullName": "Muhammad Bhovdair",
+  "Password": "$2a$10$ScVD6gijHMA1LE1Uy1z3NezacRyIcyURtLwTO9.c4S7Ho1KC79OQy",
+  "IsActive": true,
+  "CreatedBy": "System",
+  "ModifiedOn": null,
+  "ModifiedBy": null,
+  "CreatedOn": {
+    "$date": "2021-12-15T23:47:58.516Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ba8327c057488f7ea86500"
+  },
+  "Username": "asdasd",
+  "FullName": "Muhammad Bhovdair2",
+  "Password": "$2a$10$HrhrpnaRI5/QGCgyIXEW9.IygcygWQxgcI9NiHK9lM8R7YaFyK01i",
+  "IsActive": true,
+  "CreatedBy": "System",
+  "ModifiedOn": null,
+  "ModifiedBy": null,
+  "CreatedOn": {
+    "$date": "2021-12-16T00:07:03.979Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ba878ac057488f7ea86531"
+  },
+  "Username": "asadsaasd",
+  "FullName": "basd",
+  "Password": "$2a$10$QpNyHbmoYRARhbTNcgzPY.JmOyQKM2v.gL9W46A1YyxvWkyEOxPBW",
+  "IsActive": true,
+  "CreatedBy": "System",
+  "ModifiedOn": null,
+  "ModifiedBy": null,
+  "CreatedOn": {
+    "$date": "2021-12-16T00:25:46.706Z"
+  },
+  "__v": 0
+}]
