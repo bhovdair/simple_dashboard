@@ -39,6 +39,10 @@ const userLogin = async (req, res) => {
             throw new Error("User not found.");
         }
 
+        if (!Data.IsActive) {
+            throw new Error("User already inactive.");
+        }
+
         const validPassword = await bcrypt.compare(password, Data.Password);
         if (validPassword) {
             status = true;
