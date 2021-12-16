@@ -1,0 +1,355 @@
+<%- include('templates/head'); %>
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">User</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">User</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <button type="button" class="btn btn-app bg-success" id="btnAdd">
+                    <i class="fas fa-plus-square"></i> Add
+                </button>
+                <button type="button" class="btn btn-app bg-secondary" id="btnRefresh">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Datagrid</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered" id="dataGrid">
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Username</th>
+                                        <th>Full Name</th>
+                                        <th>Status</th>
+                                        <th>Created On</th>
+                                        <th>Created By</th>
+                                        <th>Modified On</th>
+                                        <th>Modified By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name" class="cols-sm-2 control-label">Full Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="fullName" id="fullName"
+                                placeholder="Enter your Full Name" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Username</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="userName" id="userName"
+                                placeholder="Enter your Username" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="cols-sm-2 control-label">Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Enter your Password" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="passwordConfirmation"
+                                id="passwordConfirmation" placeholder="Confirm your Password" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Submit</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Username</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userName" readonly autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="cols-sm-2 control-label">Full Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="fullName" id="fullName"
+                                placeholder="Enter your Full Name" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="isActive">
+                        <label for="isActive" class="custom-control-label">Is Active</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate">Submit</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<%- include('templates/foot'); %>
+<script src="/assets/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    let table = $('#dataGrid').DataTable({
+        processing: true,
+        serverSide: true,
+        sScrollXInner: '150%',
+        scrollY: "500px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        order: [
+            [1, "asc"]
+        ],
+        ajax: {
+            dataType: "json",
+            type: "POST",
+            url: "/user/datatable"
+        },
+        columnDefs: [{
+            orderable: false,
+            targets: 0
+        }],
+        columns: [{
+                "data": "_id",
+                "render": function (data, type, row) {
+                    return "<button type=\"button\" onclick=\"edit_data('" + data + "')\" class=\"btn btn-primary btn-space btn-sm\"><i class=\"fa fa-fw fa-edit\"></i></button>";
+                }
+            },
+            {
+                "data": "Username",
+                "autoWidth": true
+            },
+            {
+                "data": "FullName",
+                "autoWidth": true
+            },
+            {
+                "data": "IsActive",
+                "render": function (data, type, row) {
+                    let html = '<i class="fa fa-fw fa-check text-success"></i>';
+                    if (data == false) {
+                        html = '<i class="fa fa-fw fa-times text-danger"></i>';
+                    }
+                    return html;
+                }
+            },
+            {
+                'data': 'CreatedOn',
+                "autoWidth": true,
+                "render": function (data, type, row) {
+                    return moment(data).tz('Asia/Jakarta').format('DD/MM/YYYY hh:mm:ss');
+                }
+            },
+            {
+                'data': 'CreatedBy',
+                "autoWidth": true
+            },
+            {
+                'data': 'ModifiedOn',
+                "autoWidth": true,
+                "render": function (data, type, row) {
+                    if (data)
+                        return moment(data).tz('Asia/Jakarta').format('DD/MM/YYYY hh:mm:ss');
+                    else
+                        return "-";
+                }
+            },
+            {
+                'data': 'ModifiedBy',
+                "autoWidth": true,
+                "render": function (data, type, row) {
+                    if (data)
+                        return data;
+                    else
+                        return "-";
+                }
+            }
+        ]
+    });
+
+
+    $('#btnRefresh').click(function () {
+        table.ajax.reload(null, false);
+    });
+
+    $('#btnAdd').click(function () {
+        $('#addModal').modal('show');
+    });
+
+
+    $('#addModal #btnSave').click(function () {
+        $('#addModal').find('.is-invalid').removeClass('is-invalid');
+        $('#addModal').find('.error').remove();
+        $.post("/user/create", {
+                userName: $('#addModal #userName').val(),
+                fullName: $('#addModal #fullName').val(),
+                password: $('#addModal #password').val(),
+                passwordConfirmation: $('#addModal #passwordConfirmation').val(),
+            },
+            function (data) {
+                if (data.status) {
+                    toastr.success(data.message)
+                    $('#addModal').modal('hide');
+                    $('#addModal #userName').val("");
+                    $('#addModal #fullName').val("");
+                    $('#addModal #password').val("");
+                    $('#addModal #passwordConfirmation').val("");
+                    $('#addModal').find('.is-invalid').removeClass('is-invalid');
+                    $('#addModal').find('.error').remove();
+                } else {
+                    toastr.warning(data.message)
+                    if (data.errors.length > 0) {
+                        $.each(data.errors, function (key, val) {
+                            let element = $('#addModal #' + val.param);
+                            $(element).addClass('is-invalid');
+                            $(element).parent().append('<span class="error invalid-feedback">' + val
+                                .msg + '</span>');
+                        });
+                    }
+                }
+            });
+    });
+
+    let selectedUsername = "";
+
+    function edit_data(id) {
+        $('#editModal').find('.is-invalid').removeClass('is-invalid');
+        $('#editModal').find('.error').remove();
+        $.get("/user/" + id,
+            function (response) {
+                if (response.status) {
+                    let data = response.data;
+                    selectedUsername = data.Username;
+                    $('#editModal #userName').val(data.Username);
+                    $('#editModal #fullName').val(data.FullName);
+                    let checked = data.IsActive;
+                    $('#editModal #isActive').prop('checked', checked);
+                    $('#editModal').modal('show');
+                } else {
+                    toastr.warning(response.message)
+                }
+            });
+    }
+
+
+    $('#editModal #btnUpdate').click(function () {
+        $('#editModal').find('.is-invalid').removeClass('is-invalid');
+        $('#editModal').find('.error').remove();
+        $.post("/user/update", {
+                userName : selectedUsername,
+                fullName: $('#editModal #fullName').val(),
+                isActive : $('#editModal #isActive').is(':checked')
+            },
+            function (data) {
+                if (data.status) {
+                    toastr.success(data.message)
+                    $('#editModal').modal('hide');
+                    $('#editModal #fullName').val("");
+                    $('#editModal #isActive').prop('checked', false);
+                    $('#editModal').find('.is-invalid').removeClass('is-invalid');
+                    $('#editModal').find('.error').remove();
+                    table.ajax.reload();
+                } else {
+                    toastr.warning(data.message)
+                    if (data.errors.length > 0) {
+                        $.each(data.errors, function (key, val) {
+                            let element = $('#editModal #' + val.param);
+                            $(element).addClass('is-invalid');
+                            $(element).parent().append('<span class="error invalid-feedback">' + val
+                                .msg + '</span>');
+                        });
+                    }
+                }
+            });
+    });
+    
+</script>
