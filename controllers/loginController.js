@@ -49,6 +49,7 @@ const userLogin = async (req, res) => {
             message = "Login succeed.";
             sess = req.session;
             sess.username = Data.Username;
+            sess.fullName = Data.FullName;
         } else {
             message = "Login failed.";
         }

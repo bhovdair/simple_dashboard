@@ -46,7 +46,7 @@
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                       <img src="/assets/vendor/dist/img/avatar5.png" class="user-image img-circle elevation-2" alt="User Image">
-                      <span class="d-none d-md-inline">FullName</span>
+                      <span class="d-none d-md-inline"><%= fullName %></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                       <!-- User image -->
@@ -54,7 +54,7 @@
                         <img src="/assets/vendor/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
             
                         <p>
-                          Username - FullName
+                            <%= userName %> - <%= fullName %>
                         </p>
                       </li>
                       <!-- Menu Footer-->
@@ -83,7 +83,7 @@
                 <img src="/assets/vendor/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Nanda</a>
+                <a href="#" class="d-block"><%= fullName %></a>
             </div>
         </div>
 
@@ -127,12 +127,26 @@
                     <a href="/employee" class="nav-link <%= currentMenu === 'employee' ? 'active' : '' %>">
                         <i class="nav-icon fas fa-users-cog"></i>
                         <p>
-                            Employe
+                            Employee
                         </p>
                     </a>
                 </li>
-
-
+                <li class="nav-item">
+                    <a href="/request" class="nav-link <%= currentMenu === 'request' ? 'active' : '' %>">
+                        <i class="nav-icon fas fa-file-upload"></i>
+                        <p>
+                            Request
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/result" class="nav-link <%= currentMenu === 'result' ? 'active' : '' %>">
+                        <i class="nav-icon fas fa-file-download"></i>
+                        <p>
+                            Result
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

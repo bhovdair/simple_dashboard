@@ -130,7 +130,9 @@ const userView = (req, res) => {
 
     res.render("user", {
         pageName: "User",
-        currentMenu: 'user'
+        currentMenu: 'user',
+        userName : sess.username,
+        fullName : sess.fullName,
     });
 }
 

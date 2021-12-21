@@ -1,0 +1,298 @@
+<%- include('templates/head'); %>
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/vendor/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/vendor/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><%=pageName%></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><%=pageName%></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- <div class="row">
+                <button type="button" class="btn btn-app bg-secondary" id="btnRefresh">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div> -->
+            <div class="row" style="margin-bottom:5px">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <form id="formFilters">
+                        <div class="card mb-4">
+                            <div class="card-header bg-secondary text-white">
+                                Filter
+                                <div class="float-right">
+                                    <button class="btn btn-sm btn-default" type="button" data-toggle="collapse"
+                                        data-target="#filterBody">
+                                        <i class="fas fa-minus" data-toggle="collapse" data-target="#filterBody"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="filterBody" class="collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">UNIQ</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" autocomplete="off" id="uniq"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">Timestamp</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">From</label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group date" id="startDate"
+                                                        data-target-input="nearest">
+                                                        <input type="text" autocomplete="off"
+                                                            class="form-control datetimepicker-input"
+                                                            data-target="#startDate" id="timeStart">
+                                                        <div class="input-group-append" data-target="#startDate"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">To</label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group date" id="endDate"
+                                                        data-target-input="nearest">
+                                                        <input type="text" autocomplete="off"
+                                                            class="form-control datetimepicker-input"
+                                                            data-target="#endDate" id="timeEnd">
+                                                        <div class="input-group-append" data-target="#endDate"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">Absen ID</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" autocomplete="off" id="absenId"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">Nama Karyawan</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" autocomplete="off" id="employeeName"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">Username</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" autocomplete="off" id="username"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">NIK</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" autocomplete="off" id="nik" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" class="btn btn-app bg-secondary" id="btnClearSearch">
+                                        <i class="fas fa-search-minus"></i> Clear Search
+                                    </button>
+                                    <button type="button" class="btn btn-app bg-primary" id="btnSearch">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                    <button type="button" class="btn btn-app bg-success" id="btnDownloadExcel">
+                                        <i class="fas fa-file-excel"></i> Download Excel
+                                    </button>
+                                    <button type="button" class="btn btn-app bg-success" id="btnDownloadCsv">
+                                        <i class="fas fa-file-csv"></i> Download CSV
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Datagrid</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered" id="dataGrid">
+                                <thead>
+                                    <tr>
+                                        <th>UNIQ</th>
+                                        <th>Timestamp</th>
+                                        <th>Absen ID</th>
+                                        <th>Nama Karyawan</th>
+                                        <th>Username</th>
+                                        <th>NIK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<%- include('templates/foot'); %>
+<script src="/assets/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/vendor/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/assets/vendor/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<script>
+    let table = $('#dataGrid').DataTable({
+        processing: true,
+        serverSide: true,
+        sScrollXInner: '150%',
+        scrollY: "500px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        order: [
+            [1, "asc"]
+        ],
+        ajax: {
+            dataType: "json",
+            type: "POST",
+            url: "/request/datatable",
+            data: function (d) {
+                d.uniq = $('#uniq').val();
+                d.timeStart = $('#timeStart').val();
+                d.timeEnd = $('#timeEnd').val();
+                d.absenId = $('#absenId').val();
+                d.employeeName = $('#employeeName').val();
+                d.username = $('#username').val();
+                d.nik = $('#nik').val();
+            }
+        },
+        columnDefs: [],
+        columns: [{
+                "data": "UNIQ",
+                "autoWidth": true
+            },
+            {
+                "data": "timestamp",
+                "autoWidth": true
+            },
+            {
+                "data": "absenId",
+                "autoWidth": true
+            },
+            {
+                "data": "NamaKaryawan",
+                "autoWidth": true
+            },
+            {
+                "data": "Username",
+                "autoWidth": true
+            },
+            {
+                "data": "NIK",
+                "autoWidth": true
+            },
+        ]
+    });
+
+
+    $('#btnSearch').click(function () {
+        table.draw();
+    });
+
+    $('#btnClearSearch').click(function (ev) {
+        $('#uniq').val('');
+        $('#timeStart').val('');
+        $('#timeEnd').val('');
+        $('#absenId').val('');
+        $('#employeeName').val('');
+        $('#username').val('');
+        $('#nik').val('');
+        table.draw();
+    });
+
+    $('#startDate').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+
+
+    $('#endDate').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+
+    $('#btnDownloadExcel').click(function () {
+        var params = {
+        uniq : $('#uniq').val(),
+        timeStart : $('#timeStart').val(),
+        timeEnd : $('#timeEnd').val(),
+        absenId : $('#absenId').val(),
+        employeeName : $('#employeeName').val(),
+        username : $('#username').val(),
+        nik : $('#nik').val()
+    }
+    
+    var query = $.param(params);
+
+    window.location.href = "/req/downloadExcel?" + query;
+      
+    });
+
+    $('#btnDownloadCsv').click(function () {
+        var params = {
+        uniq : $('#uniq').val(),
+        timeStart : $('#timeStart').val(),
+        timeEnd : $('#timeEnd').val(),
+        absenId : $('#absenId').val(),
+        employeeName : $('#employeeName').val(),
+        username : $('#username').val(),
+        nik : $('#nik').val()
+    }
+    
+    var query = $.param(params);
+
+    window.location.href = "/req/downloadCsv?" + query;
+      
+    });
+</script>

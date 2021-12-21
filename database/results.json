@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "61b782b92ea26b3b71396e7e",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"1\",\"_distance\":,\"_label\":,\"_validity\":}",
+    "timestamp": "13/12/2021 17:28:25.807",
+    "UNIQ": "87086f92-004f-4310-8db0-189f17e4c384"
+  },
+  {
+    "_id": "61b783d42ea26b3b71396e8f",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"1\",\"_distance\":,\"_label\":,\"_validity\":}",
+    "timestamp": "13/12/2021 17:33:08.224",
+    "UNIQ": "666cfd9d-694a-40af-bedc-0f5856cc8612"
+  },
+  {
+    "_id": "61b784ebcd92cd07adcb9383",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"0\",\"_distance\":(0.34),\"_label\":G:\\Project\\Bitbucket\\Face/images-train/25645672441.png,\"_validity\":true}",
+    "timestamp": "13/12/2021 17:37:47.279",
+    "UNIQ": "c6343e07-98ed-4864-b386-f5ce60c9bb3a"
+  },
+  {
+    "_id": "61b785123ba7adb42d7618c6",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"0\",\"_distance\":(0.34),\"_label\":G:\\Project\\Bitbucket\\Face/images-train/25645672441.png,\"_validity\":true}",
+    "timestamp": "13/12/2021 17:38:26.274",
+    "UNIQ": "e7d01618-db8e-4cfc-96d6-c268e95ad3ee"
+  },
+  {
+    "_id": "61b785313ba7adb42d7618cb",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"0\",\"_distance\":(0.36),\"_label\":G:\\Project\\Bitbucket\\Face/images-train/25645672441.png,\"_validity\":true}",
+    "timestamp": "13/12/2021 17:38:57.553",
+    "UNIQ": "bc5613a3-1669-4198-99e3-c9cd92bf0a7b"
+  },
+  {
+    "_id": "61b785d94e64d6c6a525a6e2",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"0\",\"_distance\":(0.46),\"_label\":G:\\Project\\Bitbucket\\Face/images-train/25645672441.png,\"_validity\":true}",
+    "timestamp": "13/12/2021 17:41:45.439",
+    "UNIQ": "d1dac04a-5345-4859-b4ba-bb01539c4339"
+  },
+  {
+    "_id": "61b785ee4e64d6c6a525a6ec",
+    "__v": "0",
+    "NIK": "25645672441",
+    "responseLog": "{\"status+\":\"0\",\"_distance\":(0.21),\"_label\":G:\\Project\\Bitbucket\\Face/images-train/25645672441.png,\"_validity\":true}",
+    "timestamp": "13/12/2021 17:42:06.179",
+    "UNIQ": "24de4202-a312-4699-814f-55ba8bacc4d2"
+  }
+]

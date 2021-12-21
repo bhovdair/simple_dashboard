@@ -79,6 +79,39 @@
                 <!-- ./col -->
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Trafik Jumlah User Terdaftar</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart">
+                        <canvas id="chart1" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+      
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title">Trafik Jumlah User Presensi</h3>
+                      </div>
+                      <div class="card-body">
+                        <div class="chart2">
+                          <canvas id="chart2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+        
+                  </div>
+              </div>
+
             <div class="text-center">
                 <h2 class="h2 mb-0 text-white-900 font-weight-bold text-uppercase"><p class="badge bg-primary">DATANG PALING PAGI</p></h2>
             </div>
@@ -246,3 +279,98 @@
 <!-- /.content-wrapper -->
 
 <%- include('templates/foot'); %>
+<script src="/assets/vendor/plugins/chart.js/Chart.min.js"></script>
+<script>
+
+var chart1Canvas = $('#chart1').get(0).getContext('2d')
+
+var chart1Data = {
+ labels  : ['Dec 5', 'Dec 6', 'Dec 7', 'Dec 8', 'Dec 9', 'Dec 10', 'Dec 12', 'Dec 13', 'Dec 14'],
+  datasets: [
+    {
+      backgroundColor     : 'rgba(60,141,188,0.9)',
+      borderColor         : 'rgba(60,141,188,0.8)',
+      pointRadius          : true,
+      pointColor          : '#3b8bba',
+      pointStrokeColor    : 'rgba(60,141,188,1)',
+      pointHighlightFill  : '#fff',
+      pointHighlightStroke: 'rgba(60,141,188,1)',
+      data                : [28, 48, 40, 19, 86, 27, 90, 100, 200]
+    }
+  ]
+}
+
+var chart1Options = {
+  maintainAspectRatio : true,
+  responsive : true,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      gridLines : {
+        display : true,
+      }
+    }],
+    yAxes: [{
+      gridLines : {
+        display : true,
+      }
+    }]
+  }
+}
+
+new Chart(chart1Canvas, {
+  type: 'line',
+  data: chart1Data,
+  options: chart1Options
+})
+
+
+var chart2Canvas = $('#chart2').get(0).getContext('2d')
+
+var chart2Data = {
+  labels  : ['Dec 5', 'Dec 6', 'Dec 7', 'Dec 8', 'Dec 9', 'Dec 10', 'Dec 12', 'Dec 13', 'Dec 14'],
+  datasets: [
+    {
+      backgroundColor     : 'rgba(60,141,188,0.9)',
+      borderColor         : 'rgba(60,141,188,0.8)',
+      pointRadius          : true,
+      pointColor          : '#3b8bba',
+      pointStrokeColor    : 'rgba(60,141,188,1)',
+      pointHighlightFill  : '#fff',
+      pointHighlightStroke: 'rgba(60,141,188,1)',
+      data                : [10000, 20000, 0, 3000, 5000, 15000, 2000, 25000, 12000]
+    }
+  ]
+}
+
+var chart2Options = {
+  maintainAspectRatio : true,
+  responsive : true,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      gridLines : {
+        display : true,
+      }
+    }],
+    yAxes: [{
+      gridLines : {
+        display : true,
+      }
+    }]
+  }
+}
+
+new Chart(chart2Canvas, {
+  type: 'line',
+  data: chart2Data,
+  options: chart2Options
+})
+
+
+
+</script>

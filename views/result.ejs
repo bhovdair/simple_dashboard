@@ -41,12 +41,9 @@
                             <table class="table table-bordered" id="dataGrid">
                                 <thead>
                                     <tr>
-                                        <th>Action</th>
                                         <th>UNIQ</th>
                                         <th>Timestamp</th>
-                                        <th>Absen ID</th>
-                                        <th>Nama Karyawan</th>
-                                        <th>Username</th>
+                                        <th>Response Log</th>
                                         <th>NIK</th>
                                     </tr>
                                 </thead>
@@ -108,18 +105,13 @@
         ajax: {
             dataType: "json",
             type: "POST",
-            url: "/employee/datatable"
+            url: "/result/datatable"
         },
         columnDefs: [{
             orderable: false,
             targets: 0
         }],
-        columns: [{
-                "data": "_id",
-                "render": function (data, type, row) {
-                    return "<button type=\"button\" onclick=\"delete_data('" + data + "')\" class=\"btn btn-danger btn-space btn-sm\"><i class=\"fa fa-fw fa-trash\"></i></button>";
-                }
-            },
+        columns: [
             {
                 "data": "UNIQ",
                 "autoWidth": true
@@ -129,15 +121,7 @@
                 "autoWidth": true
             },
             {
-                "data": "absenId",
-                "autoWidth": true
-            },
-            {
-                "data": "NamaKaryawan",
-                "autoWidth": true
-            },
-            {
-                "data": "Username",
+                "data": "responseLog",
                 "autoWidth": true
             },
             {
@@ -152,40 +136,5 @@
         table.ajax.reload(null, false);
     });
 
-    let selectedId = "";
-    let selectedNIK = "";
-
-    function delete_data(id) {
-        $.get("/employee/" + id,
-            function (response) {
-                if (response.status) {
-                    let data = response.data;
-                    selectedId = data._id;
-                    selectedNIK = data.NIK;
-                    $('#deleteModal').modal('show');
-                } else {
-                    toastr.warning(response.message)
-                }
-            });
-    }
-
-
-    $('#btnDelete').click(function () {
-        $.post("/employee/delete", {
-                id : selectedId
-            },
-            function (data) {
-                if (data.status) {
-                    toastr.success(data.message)
-                    $('#deleteModal').modal('hide');
-                    table.ajax.reload();
-                    $.get(" http://127.0.0.1:3000/delete/" + selectedNIK,
-                    function (response) {
-                    });
-                } else {
-                    toastr.warning(data.message)
-                }
-            });
-    });
     
 </script>

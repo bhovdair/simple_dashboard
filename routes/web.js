@@ -3,6 +3,8 @@ const { loginView, userLogin } = require('../controllers/loginController');
 const { dashView } = require('../controllers/dashboardController');
 const { userView, userDataTable, createUser, updateUser, getUser} = require('../controllers/userController');
 const { employeeView, employeeDataTable, deleteEmployee, getEmployee} = require('../controllers/employeeController');
+const { requestView, requestDataTable, getRequest, downloadExcelRequest, downloadCsvRequest} = require('../controllers/requestController');
+const { resultView, resultDataTable, getResult} = require('../controllers/resultController');
 const router = express.Router();
 const { check } = require('express-validator')
 const User = require("../models/User");
@@ -83,6 +85,24 @@ router.post('/employee/datatable', employeeDataTable);
 
 
 router.post('/employee/delete', deleteEmployee);
+
+
+router.get('/request', requestView);
+
+router.get('/request/:id', getRequest);
+
+router.post('/request/datatable', requestDataTable);
+
+router.get('/req/downloadExcel', downloadExcelRequest);
+router.get('/req/downloadCsv', downloadCsvRequest);
+
+
+router.get('/result', resultView);
+
+router.get('/result/:id', getResult);
+
+router.post('/result/datatable', resultDataTable);
+
 
 
 module.exports = router;
