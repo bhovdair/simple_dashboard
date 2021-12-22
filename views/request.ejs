@@ -135,6 +135,9 @@
                                     <button type="button" class="btn btn-app bg-success" id="btnDownloadCsv">
                                         <i class="fas fa-file-csv"></i> Download CSV
                                     </button>
+                                    <button type="button" class="btn btn-app bg-success" id="btnDownloadJson">
+                                        <i class="fas fa-file-json"></i> View JSON
+                                    </button>
                                 </div>
                             </div>
 
@@ -293,6 +296,23 @@
     var query = $.param(params);
 
     window.location.href = "/req/downloadCsv?" + query;
+      
+    });
+
+    $('#btnDownloadJson').click(function () {
+        var params = {
+        uniq : $('#uniq').val(),
+        timeStart : $('#timeStart').val(),
+        timeEnd : $('#timeEnd').val(),
+        absenId : $('#absenId').val(),
+        employeeName : $('#employeeName').val(),
+        username : $('#username').val(),
+        nik : $('#nik').val()
+    }
+    
+    var query = $.param(params);
+
+    window.location.href = "/req/downloadJson?" + query;
       
     });
 </script>

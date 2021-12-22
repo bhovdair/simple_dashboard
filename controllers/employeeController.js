@@ -1,6 +1,33 @@
 const Employee = require("../models/Employee");
-const bcrypt = require("bcryptjs");
+const CsvParser = require("json2csv").Parser;
 
+const downloadCsvEmployee = (req, res) => {
+    Employee.find().then((objs) => {
+      let employees = [];
+      objs.forEach((obj) => {
+        employees.push({
+          id: obj.id,
+          absenId: obj.absenId,
+          // MD5Image: obj.MD5Image,
+          NamaKaryawan: obj.NamaKaryawan,
+          NIK: obj.NIK,
+          timestamp: obj.timestamp,
+          UNIQ: obj.UNIQ,
+          Username: obj.Username,
+        });
+      });
+  
+      const csvFields = ["Id", "Absen ID", "Nama Karyawan", "NIK", "timestamp" , "UNIQ", "Username"];
+      const csvParser = new CsvParser({ csvFields });
+      const csvData = csvParser.parse(employees);
+  
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=employees.csv");
+  
+      res.status(200).end(csvData);
+    });
+  };
+  
 
 
 const deleteEmployee = async (req, res) => {
@@ -82,5 +109,6 @@ module.exports = {
     employeeView,
     employeeDataTable,
     deleteEmployee,
-    getEmployee
+    getEmployee,
+    downloadCsvEmployee
 };

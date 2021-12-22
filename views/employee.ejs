@@ -29,6 +29,9 @@
                 <button type="button" class="btn btn-app bg-secondary" id="btnRefresh">
                     <i class="fas fa-sync"></i> Refresh
                 </button>
+                <button type="button" class="btn btn-app bg-success" id="btnDownloadCsv">
+                    <i class="fas fa-file-csv"></i> Download CSV
+                </button>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -186,6 +189,13 @@
                     toastr.warning(data.message)
                 }
             });
+    });
+
+    $('#btnDownloadCsv').click(function () {
+
+
+    window.location.href = "/emp/downloadCsv";
+      
     });
     
 </script>

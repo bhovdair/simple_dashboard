@@ -78,6 +78,29 @@ const downloadCsvRequest = (req, res) => {
   });
 };
 
+const downloadJsonRequest = (req, res) => {
+  Request.find().then((objs) => {
+    let requests = [];
+    objs.forEach((obj) => {
+      requests.push({
+        id: obj.id,
+        absenId: obj.absenId,
+        MD5Image: obj.MD5Image,
+        // NamaKaryawan: obj.NamaKaryawan,
+        NIK: obj.NIK,
+        timestamp: obj.timestamp,
+        UNIQ: obj.UNIQ,
+        Username: obj.Username,
+      });
+    });
+
+    const fs = require('fs');
+    let data = JSON.stringify(requests);
+    fs.writeFileSync('request.json', data);
+
+    return res.status(200).end();
+  });
+};
 
 const getRequest = async (req, res) => {
   let status = false;
@@ -153,5 +176,6 @@ module.exports = {
   requestDataTable,
   getRequest,
   downloadExcelRequest,
-  downloadCsvRequest
+  downloadCsvRequest,
+  downloadJsonRequest
 };
