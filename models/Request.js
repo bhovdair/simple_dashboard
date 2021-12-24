@@ -21,6 +21,10 @@ const RequestSchema = new mongoose.Schema({
   },
   timestamp: {
     type: Date
+  },
+  IsUpdated:{
+    type : Boolean,
+    default : 0
   }
 });
 

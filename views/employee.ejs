@@ -128,8 +128,11 @@
                 "autoWidth": true
             },
             {
-                "data": "timestamp",
-                "autoWidth": true
+                'data': 'timestamp',
+                "autoWidth": true,
+                "render": function (data, type, row) {
+                    return moment(data).tz('Asia/Jakarta').format('DD/MM/YYYY hh:mm:ss');
+                }
             },
             {
                 "data": "absenId",

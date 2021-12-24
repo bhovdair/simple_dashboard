@@ -204,8 +204,8 @@
             url: "/request/datatable",
             data: function (d) {
                 d.uniq = $('#uniq').val();
-                d.timeStart = $('#timeStart').val();
-                d.timeEnd = $('#timeEnd').val();
+                d.timeStart = $('#timeStart').val().split("/").reverse().join("-");
+                d.timeEnd = $('#timeEnd').val().split("/").reverse().join("-");
                 d.absenId = $('#absenId').val();
                 d.employeeName = $('#employeeName').val();
                 d.username = $('#username').val();
@@ -270,8 +270,8 @@
     $('#btnDownloadExcel').click(function () {
         var params = {
         uniq : $('#uniq').val(),
-        timeStart : $('#timeStart').val(),
-        timeEnd : $('#timeEnd').val(),
+        timeStart : $('#timeStart').val().split("/").reverse().join("-"),
+        timeEnd : $('#timeEnd').val().split("/").reverse().join("-"),
         absenId : $('#absenId').val(),
         employeeName : $('#employeeName').val(),
         username : $('#username').val(),
@@ -287,8 +287,8 @@
     $('#btnDownloadCsv').click(function () {
         var params = {
         uniq : $('#uniq').val(),
-        timeStart : $('#timeStart').val(),
-        timeEnd : $('#timeEnd').val(),
+        timeStart : $('#timeStart').val().split("/").reverse().join("-"),
+        timeEnd : $('#timeEnd').val().split("/").reverse().join("-"),
         absenId : $('#absenId').val(),
         employeeName : $('#employeeName').val(),
         username : $('#username').val(),
@@ -304,8 +304,8 @@
     $('#btnDownloadJson').click(function () {
         var params = {
         uniq : $('#uniq').val(),
-        timeStart : $('#timeStart').val(),
-        timeEnd : $('#timeEnd').val(),
+        timeStart : $('#timeStart').val().split("/").reverse().join("-"),
+        timeEnd : $('#timeEnd').val().split("/").reverse().join("-"),
         absenId : $('#absenId').val(),
         employeeName : $('#employeeName').val(),
         username : $('#username').val(),

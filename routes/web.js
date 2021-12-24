@@ -3,7 +3,7 @@ const { loginView, userLogin } = require('../controllers/loginController');
 const { dashView } = require('../controllers/dashboardController');
 const { userView, userDataTable, createUser, updateUser, getUser} = require('../controllers/userController');
 const { employeeView, employeeDataTable, deleteEmployee, getEmployee, downloadCsvEmployee} = require('../controllers/employeeController');
-const { requestView, requestDataTable, getRequest, downloadExcelRequest, downloadCsvRequest, downloadJsonRequest} = require('../controllers/requestController');
+const { requestView, requestDataTable, getRequest, downloadExcelRequest, downloadCsvRequest, downloadJsonRequest, updateTimestamp} = require('../controllers/requestController');
 const { resultView, resultDataTable, getResult} = require('../controllers/resultController');
 const router = express.Router();
 const { check } = require('express-validator')
@@ -91,6 +91,7 @@ router.get('/emp/downloadCsv', downloadCsvEmployee);
 router.get('/request', requestView);
 
 router.get('/request/:id', getRequest);
+router.get('/request/getAll', getRequest);
 
 router.post('/request/datatable', requestDataTable);
 
@@ -98,6 +99,7 @@ router.get('/req/downloadExcel', downloadExcelRequest);
 router.get('/req/downloadCsv', downloadCsvRequest);
 router.get('/req/downloadJson', downloadJsonRequest);
 
+router.post('/request/updateTimestamp', updateTimestamp);
 
 router.get('/result', resultView);
 

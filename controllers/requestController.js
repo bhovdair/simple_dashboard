@@ -110,8 +110,18 @@ const getRequest = async (req, res) => {
   let id = req.params.id;
 
   try {
-    let Data = await Request.findOne({ id: id });
-    if (data == null) {
+    let Data = await Request.find(
+      // {
+      //   $where: function () {
+      //       return (new Date(this.timestamp) >= new Date('2021-12-01') && new Date(this.timestamp) <= new Date('2021-12-24'))
+      //   }
+      // }
+      // {timestamp : { $gt: new Date('2021-12-01T23:10:40.000+00:00')}}
+      // {timestamp: { $dateToString: {  date: new Date(), format: "%Y-%m-%d" } }},
+      // {timestamp : new Date('2021-12-15T23:10:40.000+00:00')}
+    );
+    // let Data = await Request.findOne({ id: id });
+    if (Data == null) {
       message = "Data not found.";
       throw new Error(message);
     }
@@ -134,13 +144,17 @@ const requestDataTable = function (req, res) {
   }else{
     gte = new Date('2000-01-01');
   }
-
+  
   if(req.body.timeEnd){
     lte = new Date(req.body.timeEnd);
   }else{
     lte = new Date();
   }
-
+  
+  // console.log(req.body);
+  // console.log(gte);
+  // console.log(lte);
+  console.log(req.query);
   Request.dataTables({
     limit: req.body.length,
     skip: req.body.start,
@@ -155,18 +169,72 @@ const requestDataTable = function (req, res) {
         {'NamaKaryawan':  { '$regex' : req.body.employeeName, '$options' : 'i' }},
         {'Username':  { '$regex' : req.body.username, '$options' : 'i' }},
         {'NIK':  { '$regex' : req.body.nik, '$options' : 'i' }},
-        {'timestamp':   {$gte: gte, $lte: lte}}
+        // {'timestamp':  new Date('2021-12-01T23:10:40.000+00:00')},
+        // {'timestamp':  { $gt: new Date('2021-12-01T02:26:05.000Z')}},
+        // {
+        //   '$where': function () {
+        //       var docDate = new Date(this.timestamp);
+        //       return (docDate >= new Date('2021-12-13') && docDate <= new Date('2021-12-14'))
+        //   }
+        // }
+        // {
+        //   function () {
+        //       var docDate = new Date(this.timestamp);
+        //       return docDate = new Date('2021-12-01T23:10:40.000+00:00')
+        //       // return (docDate >= new Date('2021-12-01') && docDate <= new Date('2021-12-25'))
+        //       // return (docDate >= new Date('2021-12-01') && docDate <= new Date('2021-12-25'))
+        //   }
+        // }
       ]
     },
+    find:{$and:[
+      {'timestamp':  { $gt: gte}},
+      {'timestamp':  { $lt: lte}},
+    ]},
+    // find: {$and:[
+    //   {
+    //     where: function () {
+    //         return (new Date(this.timestamp) >= new Date('2021-12-01') && new Date(this.timestamp) <= new Date('2021-12-12'))
+    //     }
+    //   }
+    // ]},
     order: req.body.order,
     columns: req.body.columns
   }).then(function (table) {
+    console.log(table);
     res.json({
       data: table.data,
       recordsFiltered: table.total,
       recordsTotal: table.total
     });
   });
+};
+
+const updateTimestamp = async (req, res) => {
+  let status = false;
+  let message = "";
+  let code = 200;
+  try {
+
+    await Request.updateMany(
+      // { IsUpdated: false},
+      { $set: { IsUpdated: true } },
+      { multi: true }
+     )
+      .then(result => {
+        status = true;
+        message = "Update data succeed.";
+      })
+      .catch(err => {
+        message = "Update data failed.";
+      });
+
+  } catch (error) {
+      message = error.message;
+  }
+
+  return res.status(code).json({ status: status, message: message});
+
 };
 
 
@@ -194,5 +262,6 @@ module.exports = {
   getRequest,
   downloadExcelRequest,
   downloadCsvRequest,
-  downloadJsonRequest
+  downloadJsonRequest,
+  updateTimestamp
 };
