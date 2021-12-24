@@ -76,7 +76,11 @@ const employeeDataTable = function (req, res) {
         limit: req.body.length,
         skip: req.body.start,
         order: req.body.order,
-        columns: req.body.columns
+        columns: req.body.columns,
+        search: {
+            value: req.body.search.value,
+            fields: [ 'absenId', 'NamaKaryawan', 'NIK', 'timestamp', 'UNIQ', 'Username']
+          }
     }).then(function (table) {
         res.json({
             data: table.data,

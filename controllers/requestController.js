@@ -127,20 +127,37 @@ const getRequest = async (req, res) => {
 };
 
 const requestDataTable = function (req, res) {
+  let gte = "";
+  let lte = "";
+  if(req.body.timeStart){
+    gte = new Date(req.body.timeStart);
+  }else{
+    gte = new Date('2000-01-01');
+  }
+
+  if(req.body.timeEnd){
+    lte = new Date(req.body.timeEnd);
+  }else{
+    lte = new Date();
+  }
+
   Request.dataTables({
     limit: req.body.length,
     skip: req.body.start,
     search: {
-      // value: req.body.search.value,
-      // fields: ['username']
+      value: req.body.search.value,
+      fields: [ 'UNIQ', 'absenId', 'NamaKaryawan', 'Username', 'NIK', 'timestamp']
     },
-    //   find:{ $and:[ 
-    //       {'UNIQ': req.body.uniq}, 
-    //       {'absenId': req.body.absenId} ,
-    //       {'NamaKaryawan': req.body.employeeName} ,
-    //       {'Username': req.body.username} ,
-    //       {'NIK': req.body.nik} ,
-    //     ]},
+    find:{$and:
+      [
+        {'UNIQ':  { '$regex' : req.body.uniq, '$options' : 'i' }},
+        {'absenId':  { '$regex' : req.body.absenId, '$options' : 'i' }},
+        {'NamaKaryawan':  { '$regex' : req.body.employeeName, '$options' : 'i' }},
+        {'Username':  { '$regex' : req.body.username, '$options' : 'i' }},
+        {'NIK':  { '$regex' : req.body.nik, '$options' : 'i' }},
+        {'timestamp':   {$gte: gte, $lte: lte}}
+      ]
+    },
     order: req.body.order,
     columns: req.body.columns
   }).then(function (table) {

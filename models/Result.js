@@ -11,7 +11,7 @@ const ResultSchema = new mongoose.Schema({
     type: String,
   },
   timestamp: {
-    type: String
+    type: Date
   }
 });
 
