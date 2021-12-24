@@ -4,14 +4,47 @@ const excel = require("exceljs");
 const CsvParser = require("json2csv").Parser;
 
 const downloadExcelRequest = (req, res) => {
-  Request.find().then((objs) => {
+
+  let uniq = req.query.uniq;
+  let timeStart = req.query.timeStart;
+  let timeEnd = req.query.timeEnd;
+  let absenId = req.query.absenId;
+  let employeeName = req.query.employeeName;
+  let username = req.query.username;
+  let nik = req.query.nik;
+  let gte = "";
+  let lte = "";
+
+  if(timeStart){
+    gte = new Date(timeStart);
+    gte = gte.setDate(gte.getDate() - 1);
+  }else{
+    gte = new Date('2000-01-01');
+  }
+  
+  if(timeEnd){
+    lte = new Date(timeEnd);
+  }else{
+    lte = new Date();
+  }
+
+  Request.find(
+    {
+    UNIQ :  { '$regex' : uniq, '$options' : 'i'} , 
+    absenId :  { '$regex' : absenId, '$options' : 'i'} , 
+    NamaKaryawan :  { '$regex' : employeeName, '$options' : 'i'} , 
+    Username :  { '$regex' : username, '$options' : 'i'} , 
+    NIK :  { '$regex' : nik, '$options' : 'i'} , 
+    timestamp : { $gt: gte}, 
+    timestamp : { $lt: lte}},
+  ).then((objs) => {
     let requests = [];
     objs.forEach((obj) => {
       requests.push({
         id: obj.id,
         absenId: obj.absenId,
-        MD5Image: obj.MD5Image,
-        // NamaKaryawan: obj.NamaKaryawan,
+        // MD5Image: obj.MD5Image,
+        NamaKaryawan: obj.NamaKaryawan,
         NIK: obj.NIK,
         timestamp: obj.timestamp,
         UNIQ: obj.UNIQ,
@@ -52,7 +85,39 @@ const downloadExcelRequest = (req, res) => {
 };
 
 const downloadCsvRequest = (req, res) => {
-  Request.find().then((objs) => {
+  let uniq = req.query.uniq;
+  let timeStart = req.query.timeStart;
+  let timeEnd = req.query.timeEnd;
+  let absenId = req.query.absenId;
+  let employeeName = req.query.employeeName;
+  let username = req.query.username;
+  let nik = req.query.nik;
+  let gte = "";
+  let lte = "";
+
+  if(timeStart){
+    gte = new Date(timeStart);
+    gte = gte.setDate(gte.getDate() - 1);
+  }else{
+    gte = new Date('2000-01-01');
+  }
+  
+  if(timeEnd){
+    lte = new Date(timeEnd);
+  }else{
+    lte = new Date();
+  }
+
+  Request.find(
+    {
+    UNIQ :  { '$regex' : uniq, '$options' : 'i'} , 
+    absenId :  { '$regex' : absenId, '$options' : 'i'} , 
+    NamaKaryawan :  { '$regex' : employeeName, '$options' : 'i'} , 
+    Username :  { '$regex' : username, '$options' : 'i'} , 
+    NIK :  { '$regex' : nik, '$options' : 'i'} , 
+    timestamp : { $gt: gte}, 
+    timestamp : { $lt: lte}},
+  ).then((objs) => {
     let requests = [];
     objs.forEach((obj) => {
       requests.push({
@@ -79,14 +144,46 @@ const downloadCsvRequest = (req, res) => {
 };
 
 const downloadJsonRequest = (req, res) => {
-  Request.find().then((objs) => {
+  let uniq = req.query.uniq;
+  let timeStart = req.query.timeStart;
+  let timeEnd = req.query.timeEnd;
+  let absenId = req.query.absenId;
+  let employeeName = req.query.employeeName;
+  let username = req.query.username;
+  let nik = req.query.nik;
+  let gte = "";
+  let lte = "";
+
+  if(timeStart){
+    gte = new Date(timeStart);
+    gte = gte.setDate(gte.getDate() - 1);
+  }else{
+    gte = new Date('2000-01-01');
+  }
+  
+  if(timeEnd){
+    lte = new Date(timeEnd);
+  }else{
+    lte = new Date();
+  }
+
+  Request.find(
+    {
+    UNIQ :  { '$regex' : uniq, '$options' : 'i'} , 
+    absenId :  { '$regex' : absenId, '$options' : 'i'} , 
+    NamaKaryawan :  { '$regex' : employeeName, '$options' : 'i'} , 
+    Username :  { '$regex' : username, '$options' : 'i'} , 
+    NIK :  { '$regex' : nik, '$options' : 'i'} , 
+    timestamp : { $gt: gte}, 
+    timestamp : { $lt: lte}},
+  ).then((objs) => {
     let requests = [];
     objs.forEach((obj) => {
       requests.push({
         id: obj.id,
         absenId: obj.absenId,
-        MD5Image: obj.MD5Image,
-        // NamaKaryawan: obj.NamaKaryawan,
+        // MD5Image: obj.MD5Image,
+        NamaKaryawan: obj.NamaKaryawan,
         NIK: obj.NIK,
         timestamp: obj.timestamp,
         UNIQ: obj.UNIQ,
@@ -141,6 +238,7 @@ const requestDataTable = function (req, res) {
   let lte = "";
   if(req.body.timeStart){
     gte = new Date(req.body.timeStart);
+    gte = gte.setDate(gte.getDate() - 1);
   }else{
     gte = new Date('2000-01-01');
   }
